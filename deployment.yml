@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-deployment
+  labels:
+    app: hello-deployment
+spec:
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: hello-pod
+        tier: hello-pod
+    spec:
+      containers:
+        - name: myjenkinsdocker
+          image: payalsasmal/1strepository:latest
+          ports:
+            - containerPort: 5000
+              name: hello-pod
