@@ -19,7 +19,7 @@ pipeline {
 	   stage('Build Docker Image') {
 	        steps {
 		    script {
-			     app = docker.build("registry:${env.BUILD_ID}")
+			     app = docker.build("payalsasmal/hello:${env.BUILD_ID}")
 			     app.inside {
 				sh 'echo $(curl localhost:8888)'
 			     }
@@ -32,7 +32,8 @@ pipeline {
 	        steps {
                    script {
                         docker.withRegistry( '', registryCredential ) {
-                           app.push()
+                           app.push("latest")
+			   myapp.push("${env.BUILD_ID}")	
                         }
 	               }
 	   
