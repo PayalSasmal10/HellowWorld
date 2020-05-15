@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: myjenkinsdocker
-          image: payalsasmal/1strepository:latest
+          image: payalsasmal/hello:latest
           ports:
             - containerPort: 5000
               name: hello-pod
