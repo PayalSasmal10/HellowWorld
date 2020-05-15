@@ -6,7 +6,7 @@ pipeline {
 	    PROJECT_ID = 'rising-webbing-276809'
             CLUSTER_NAME = 'docker-image'
             LOCATION = 'us-central1-c'
-            CREDENTIALS_ID = 'My First Project'
+            CREDENTIALS_ID = 'gke'
 
   	}
 	agent any
@@ -41,10 +41,10 @@ pipeline {
 
 	   stage('Deploy to K8S') {
 	        steps{
-                sh "sed -i 's/hello:latest/hello:${env.BUILD_ID}/g' deployment.yaml "
-                step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml',
-                credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
-            }
+			sh "sed -i 's/hello:latest/hello:${env.BUILD_ID}/g' deployment.yaml"
+			step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml',
+			credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
+            	}
 
 
 
