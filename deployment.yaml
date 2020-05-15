@@ -6,6 +6,9 @@ metadata:
     app: hello
 spec:
   replicas: 1
+  selector:
+      matchLabels:
+        name: hello
   template:
     metadata:
       labels:
@@ -29,7 +32,8 @@ metadata:
     app: hello
 spec:
   selector:
-    app: hello
+      matchLabels:
+         name: hello
   ports:
     - port: 5000
       targetPort: 5000
