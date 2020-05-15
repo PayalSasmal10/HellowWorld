@@ -1,12 +1,12 @@
 pipeline {
 	 environment {
-	    registry = "payalsasmal/1strepository"
+	    registry = "payalsasmal/hello"
 	    registryCredential = 'dockerhub'
 	    app = ''
 	    PROJECT_ID = 'rising-webbing-276809'
-        CLUSTER_NAME = 'docker-image'
-        LOCATION = 'us-central1-c'
-        CREDENTIALS_ID = 'My First Project'
+            CLUSTER_NAME = 'docker-image'
+            LOCATION = 'us-central1-c'
+            CREDENTIALS_ID = 'My First Project'
 
   	}
 	agent any
@@ -18,12 +18,12 @@ pipeline {
 	        }
 	   stage('Build Docker Image') {
 	        steps {
-				script {
-                     app = docker.build registry + "$BUILD_NUMBER"
-                     app.inside {
-                        sh 'echo $(curl localhost:8888)'
-                     }
-				 }
+		    script {
+			     app = docker.build("registry:${env.BUILD_ID}")
+			     app.inside {
+				sh 'echo $(curl localhost:8888)'
+			     }
+		    }
 	        }
 	   }
 
@@ -41,8 +41,8 @@ pipeline {
 
 	   stage('Deploy to K8S') {
 	        steps{
-                sh "sed -i 's/hello:latest/hello:${env.BUILD_ID}/g' services.yml deployment.yml "
-                step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', 'services.yml',
+                sh "sed -i 's/hello:latest/hello:${env.BUILD_ID}/g' deployment.yaml "
+                step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml',
                 credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
             }
 
