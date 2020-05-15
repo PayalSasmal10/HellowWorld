@@ -29,8 +29,7 @@ metadata:
     app: hello
 spec:
   selector:
-	app: hello
-
+    app: hello
   ports:
     - port: 5000
       targetPort: 5000
