@@ -33,7 +33,7 @@ pipeline {
                    script {
                         docker.withRegistry( '', registryCredential ) {
                            app.push("latest")
-			   myapp.push("${env.BUILD_ID}")	
+			   app.push("${env.BUILD_ID}")	
                         }
 	               }
 	   
